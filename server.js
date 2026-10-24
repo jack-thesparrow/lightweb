@@ -11,6 +11,8 @@ const startedAt = Date.now();
 
 let requests = 0;
 let greetings = 0;
+const recentGreetings = [];
+const maxRecentGreetings = 5;
 
 const contentTypes = {
   ".css": "text/css; charset=utf-8",
@@ -118,10 +120,18 @@ const server = createServer(async (req, res) => {
     const name = (searchParams.get("name") || "").trim().slice(0, 40) || "world";
     greetings += 1;
 
+    const message = `Hello, ${name}!`;
+    const timestamp = new Date().toISOString();
+
+    recentGreetings.unshift({ message, timestamp });
+    if (recentGreetings.length > maxRecentGreetings) {
+      recentGreetings.length = maxRecentGreetings;
+    }
+
     sendJson(res, 200, {
-      message: `Hello, ${name}!`,
+      message,
       source: "Node.js backend",
-      timestamp: new Date().toISOString(),
+      timestamp,
       greetingsServed: greetings,
     });
     return;
@@ -137,6 +147,15 @@ const server = createServer(async (req, res) => {
       requestCount: requests,
       uptimeSeconds: Math.round((Date.now() - startedAt) / 1000),
     });
+    return;
+  }
+
+  if (pathname === "/api/greetings") {
+    if (req.method !== "GET") {
+      sendJson(res, 405, { error: "Method not allowed" });
+      return;
+    }
+    sendJson(res, 200, { greetings: recentGreetings });
     return;
   }
 
