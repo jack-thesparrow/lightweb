@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Lightweb is a tiny full-stack demo served from a single lightweight container." />
+    <meta name="theme-color" content="#0b1020" />
+    <title>Lightweb — tiny full-stack demo</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="glow glow-one" aria-hidden="true"></div>
+    <div class="glow glow-two" aria-hidden="true"></div>
+
+    <header class="nav shell">
+      <a class="brand" href="/" aria-label="Lightweb home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z" />
+          </svg>
+        </span>
+        <span>lightweb</span>
+      </a>
+
+      <div class="status" id="status" role="status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="status-text">Checking backend…</span>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Single container · zero runtime dependencies</p>
+          <h1>A tiny full-stack app that <span>actually works.</span></h1>
+          <p class="lede">
+            Vanilla HTML, CSS and JavaScript up front. A dependency-free Node.js
+            API behind it. All wrapped in one small Alpine image.
+          </p>
+
+          <div class="stack" aria-label="Technology stack">
+            <span class="chip">HTML + CSS + JS</span>
+            <span class="chip">Node.js API</span>
+            <span class="chip">Docker</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14" />
+              </svg>
+            </div>
+            <div>
+              <h2>Talk to the backend</h2>
+              <p>This calls <code>GET /api/greeting</code></p>
+            </div>
+          </div>
+
+          <form id="greeting-form">
+            <label for="name">What should we call you?</label>
+            <div class="input-row">
+              <input
+                id="name"
+                name="name"
+                type="text"
+                maxlength="40"
+                placeholder="Your name"
+                autocomplete="name"
+              />
+              <button type="submit" id="submit">Say hello</button>
+            </div>
+          </form>
+
+          <div class="response" id="response" aria-live="polite">
+            <span class="response-label">Response</span>
+            <p id="response-text">Your greeting will appear here.</p>
+            <span class="response-meta" id="response-meta">Waiting for a request</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Backend statistics">
+        <article class="stat">
+          <span class="stat-label">Greetings served</span>
+          <strong id="greeting-count">—</strong>
+        </article>
+        <article class="stat">
+          <span class="stat-label">Requests handled</span>
+          <strong id="request-count">—</strong>
+        </article>
+        <article class="stat">
+          <span class="stat-label">Uptime</span>
+          <strong id="uptime">—</strong>
+        </article>
+      </section>
+
+      <section class="how" aria-labelledby="how-title">
+        <div>
+          <p class="eyebrow">Under the hood</p>
+          <h2 id="how-title">Two layers, one image.</h2>
+        </div>
+        <div class="how-grid">
+          <article>
+            <span class="step">01</span>
+            <h3>Frontend</h3>
+            <p>Static files served straight from disk with sensible cache headers.</p>
+          </article>
+          <article>
+            <span class="step">02</span>
+            <h3>Backend</h3>
+            <p>Node's built-in HTTP server handles JSON routes, health checks and graceful shutdown.</p>
+          </article>
+          <article>
+            <span class="step">03</span>
+            <h3>Container</h3>
+            <p>One Alpine-based Dockerfile, a non-root user and a built-in health check.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell">
+      <p>Lightweb — a deliberately small full-stack demo.</p>
+      <a href="/api/health">Health check <span aria-hidden="true">↗</span></a>
+    </footer>
+  </body>
+</html>
